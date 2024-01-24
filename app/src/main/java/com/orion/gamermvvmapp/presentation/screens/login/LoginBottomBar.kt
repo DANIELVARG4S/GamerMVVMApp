@@ -1,4 +1,4 @@
-package com.orion.gamermvvmapp.screens.login
+package com.orion.gamermvvmapp.presentation.screens.login
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text

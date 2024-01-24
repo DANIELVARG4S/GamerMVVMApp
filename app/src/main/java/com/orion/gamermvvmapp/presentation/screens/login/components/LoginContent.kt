@@ -1,4 +1,4 @@
-package com.orion.gamermvvmapp.screens.login.components
+package com.orion.gamermvvmapp.presentation.screens.login.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,11 +20,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.orion.gamermvvmapp.R
-import com.orion.gamermvvmapp.components.DeafaultButton
-import com.orion.gamermvvmapp.components.DefaultTextField
-import com.orion.gamermvvmapp.ui.theme.Blue700
-import com.orion.gamermvvmapp.ui.theme.Dark700
-import com.orion.gamermvvmapp.ui.theme.GamerMVVMAppTheme
+import com.orion.gamermvvmapp.presentation.components.DeafaultButton
+import com.orion.gamermvvmapp.presentation.components.DefaultTextField
+import com.orion.gamermvvmapp.presentation.ui.theme.Blue700
+import com.orion.gamermvvmapp.presentation.ui.theme.Dark700
+import com.orion.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 
 @Composable
 fun LoginContent() {

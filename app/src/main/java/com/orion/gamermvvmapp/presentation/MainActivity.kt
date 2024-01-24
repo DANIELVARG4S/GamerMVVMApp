@@ -1,25 +1,22 @@
-package com.orion.gamermvvmapp
+package com.orion.gamermvvmapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.orion.gamermvvmapp.screens.login.Loginscreen
-import com.orion.gamermvvmapp.ui.theme.GamerMVVMAppTheme
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.orion.gamermvvmapp.presentation.navigation.AppNavigation
+import com.orion.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 
 
 class MainActivity : ComponentActivity() {
+    
+    private  lateinit var navController: NavHostController
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -29,7 +26,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background //color de fondo
                 ) {
-                    Loginscreen()
+                    navController = rememberNavController()
+                    AppNavigation(navController = navController)
                 }
             }
         }

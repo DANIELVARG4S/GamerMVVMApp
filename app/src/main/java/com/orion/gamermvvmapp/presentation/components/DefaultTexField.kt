@@ -1,4 +1,4 @@
-package com.orion.gamermvvmapp.components
+package com.orion.gamermvvmapp.presentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions

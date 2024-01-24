@@ -1,4 +1,4 @@
-package com.orion.gamermvvmapp.screens.login
+package com.orion.gamermvvmapp.presentation.screens.login
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -7,12 +7,14 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.orion.gamermvvmapp.screens.login.components.LoginContent
-import com.orion.gamermvvmapp.ui.theme.GamerMVVMAppTheme
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.orion.gamermvvmapp.presentation.screens.login.components.LoginContent
+import com.orion.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 
 
 @Composable
-fun Loginscreen() {
+fun Loginscreen(navController: NavHostController) {
 
     Scaffold(
         topBar = {},
@@ -35,7 +37,7 @@ fun DefaultPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background //color de fondo
         ) {
-            Loginscreen()
+            Loginscreen(rememberNavController())
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.orion.gamermvvmapp.ui.theme
+package com.orion.gamermvvmapp.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
