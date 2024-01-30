@@ -1,5 +1,6 @@
 package com.orion.gamermvvmapp.presentation.screens.login
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -9,11 +10,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.orion.gamermvvmapp.presentation.navigation.AppScreen
 
 @Composable
-fun LoginBottombar() {
+fun LoginBottombar(navController: NavHostController) {
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(20.dp),
         horizontalArrangement = Arrangement.Center
     ) {
@@ -24,6 +30,9 @@ fun LoginBottombar() {
         )
         Spacer(modifier = Modifier.width(7.dp))
         Text(
+            modifier = Modifier.clickable {
+                navController.navigate(route = AppScreen.Signup.route)
+            },
             text = "REGISTRATE AQUI",
             color = Color.Red,
             fontSize = 14.sp,
@@ -35,5 +44,5 @@ fun LoginBottombar() {
 @Preview(showBackground = true)
 @Composable
 fun DeafaultPreviewBottom(){
-    LoginBottombar()
+    LoginBottombar(rememberNavController())
 }

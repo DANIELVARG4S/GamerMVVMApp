@@ -16,13 +16,15 @@ import com.orion.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 @Composable
 fun Loginscreen(navController: NavHostController) {
 
+
+
     Scaffold(
         topBar = {},
         content = {
             LoginContent()
         },
         bottomBar = {
-            LoginBottombar()
+            LoginBottombar(navController)
         }
     )
 }

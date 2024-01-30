@@ -11,8 +11,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.orion.gamermvvmapp.presentation.navigation.AppNavigation
 import com.orion.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     
     private  lateinit var navController: NavHostController
