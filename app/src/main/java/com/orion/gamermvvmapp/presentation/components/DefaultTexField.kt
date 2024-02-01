@@ -54,7 +54,7 @@ fun DefaultTextField(
         )
 
         Text(
-            modifier = Modifier.padding(top = 5.dp),
+            modifier = Modifier.padding(top = 0.dp),
             text = errorMsg,
             fontSize = 11.sp,
             color = Blue700
