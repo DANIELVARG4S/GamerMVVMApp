@@ -1,33 +1,44 @@
 package com.orion.gamermvvmapp.presentation.screens.login.components
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.orion.gamermvvmapp.R
+import com.orion.gamermvvmapp.domain.model.Response
 import com.orion.gamermvvmapp.presentation.components.DefaultButton
 import com.orion.gamermvvmapp.presentation.components.DefaultTextField
+import com.orion.gamermvvmapp.presentation.navigation.AppScreen
 import com.orion.gamermvvmapp.presentation.screens.login.LoginViewModel
 import com.orion.gamermvvmapp.presentation.ui.theme.Blue700
 import com.orion.gamermvvmapp.presentation.ui.theme.Dark700
 
 @Composable
-fun LoginContent(viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginContent(navController: NavHostController,viewModel: LoginViewModel = hiltViewModel()) {
+
+    val loginFlow = viewModel.loginFlow.collectAsState()
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -117,14 +128,44 @@ fun LoginContent(viewModel: LoginViewModel = hiltViewModel()) {
                         .padding(vertical = 40.dp),
                     text = "INICIAR SESION",
                     onClick = {
-                        Log.d("LoginContent", "Email:${viewModel.email.value}")
-                        Log.d("LoginContent","Password: ${viewModel.password.value}")
+
+                              viewModel.login()
+                        //Log.d("LoginContent", "Email:${viewModel.email.value}")
+                        //Log.d("LoginContent","Password: ${viewModel.password.value}")
                     },
                     enable = viewModel.isEnableLoginButton
                 )
 
             }
 
+        }
+    }
+    loginFlow.value.let {
+        when(it) {
+            // Mostrar que se esta realizando la peticion
+            Response.Loading -> {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ){
+                    CircularProgressIndicator()
+                }
+            }
+            is Response.Success -> {
+                LaunchedEffect(Unit) {
+                    navController.navigate(route = AppScreen.Profile.route) {
+                        popUpTo(AppScreen.Login.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+                Toast.makeText(LocalContext.current,"Usuario Logeado", Toast.LENGTH_LONG).show()
+            }
+
+            is Response.Failure -> {
+                Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
+            }
+            else ->{}
         }
     }
 }

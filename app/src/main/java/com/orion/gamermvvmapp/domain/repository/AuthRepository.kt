@@ -1,0 +1,15 @@
+package com.orion.gamermvvmapp.domain.repository
+
+import com.google.firebase.auth.FirebaseUser
+import com.orion.gamermvvmapp.domain.model.Response
+import com.orion.gamermvvmapp.domain.model.User
+
+interface AuthRepository {
+
+    val currentUser: FirebaseUser?
+    suspend fun login(email:String, password: String): Response<FirebaseUser>
+
+    suspend fun signup(user: User): Response<FirebaseUser>
+    fun  logout()
+
+}
