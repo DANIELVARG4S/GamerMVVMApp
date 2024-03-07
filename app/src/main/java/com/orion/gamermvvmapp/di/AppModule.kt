@@ -7,6 +7,7 @@ import com.orion.gamermvvmapp.domain.use_cases.auth.AuthUseCases
 import com.orion.gamermvvmapp.domain.use_cases.auth.GetCurrentUser
 import com.orion.gamermvvmapp.domain.use_cases.auth.Login
 import com.orion.gamermvvmapp.domain.use_cases.auth.Logout
+import com.orion.gamermvvmapp.domain.use_cases.auth.Signup
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +27,8 @@ object AppModule {
     fun provideAuthUseCases(repository: AuthRepository) = AuthUseCases(
         getCurrentUser =  GetCurrentUser(repository),
         login = Login(repository),
-        logout = Logout(repository)
+        logout = Logout(repository),
+        signup = Signup(repository),
     )
 
 

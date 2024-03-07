@@ -1,5 +1,6 @@
 package com.orion.gamermvvmapp.presentation.screens.signup.components
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,18 +11,25 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.orion.gamermvvmapp.R
+import com.orion.gamermvvmapp.domain.model.Response
 import com.orion.gamermvvmapp.presentation.components.DefaultButton
 import com.orion.gamermvvmapp.presentation.components.DefaultTextField
+import com.orion.gamermvvmapp.presentation.navigation.AppScreen
 import com.orion.gamermvvmapp.presentation.screens.signup.SignupViewModel
 import com.orion.gamermvvmapp.presentation.ui.theme.Blue500
 import com.orion.gamermvvmapp.presentation.ui.theme.Dark700
@@ -29,7 +37,10 @@ import com.orion.gamermvvmapp.presentation.ui.theme.Dark700
 
 @Composable
 
-fun SignupContent(viewModel: SignupViewModel = hiltViewModel()) {
+fun SignupContent(navController: NavHostController,viewModel: SignupViewModel = hiltViewModel()) {
+
+    val signupFlow = viewModel.signupFlow.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -134,12 +145,38 @@ fun SignupContent(viewModel: SignupViewModel = hiltViewModel()) {
                         .fillMaxWidth()
                         .padding(vertical = 15.dp),
                     text = "REGISTRARSE",
-                    onClick = {  },
+                    onClick = { viewModel.onSignup() },
                     enable = viewModel.isEnableLoginButton
                 )
 
             }
 
+        }
+    }
+
+    signupFlow.value.let {
+        when(it) {
+            Response.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ){
+                    CircularProgressIndicator()
+                }
+            }
+            is Response.Success -> {
+                LaunchedEffect(Unit){
+                    navController.navigate(route = AppScreen.Profile.route) {
+                        popUpTo(AppScreen.Signup.route) {inclusive = true}
+                    }
+                }
+
+            }
+            is  Response.Failure ->{
+                Toast.makeText(LocalContext.current, it.exception?.message?: "Error Desconocido", Toast.LENGTH_LONG).show()
+            }
+
+            else -> {}
         }
     }
 }

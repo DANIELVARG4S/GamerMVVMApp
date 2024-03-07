@@ -4,14 +4,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.orion.gamermvvmapp.presentation.components.DefaultTopBar
-import com.orion.gamermvvmapp.presentation.screens.login.Loginscreen
 import com.orion.gamermvvmapp.presentation.screens.signup.components.SignupContent
 import com.orion.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 
@@ -28,7 +26,7 @@ fun SignupScreen(navController: NavHostController) {
                  )
         },
         content = {
-                 SignupContent()
+                 SignupContent(navController)
         },
         bottomBar = {}
     ) 
