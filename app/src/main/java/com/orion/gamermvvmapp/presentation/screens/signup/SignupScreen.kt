@@ -29,7 +29,7 @@ fun SignupScreen(navController: NavHostController) {
                  SignupContent(navController)
         },
         bottomBar = {}
-    ) 
+    )
 }
 
 @Preview(showBackground = true, showSystemUi = true)
