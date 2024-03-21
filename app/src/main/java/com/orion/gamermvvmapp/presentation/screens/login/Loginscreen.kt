@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.orion.gamermvvmapp.presentation.screens.login.components.Login
 import com.orion.gamermvvmapp.presentation.screens.login.components.LoginContent
 import com.orion.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 
@@ -21,12 +22,15 @@ fun Loginscreen(navController: NavHostController) {
     Scaffold(
         topBar = {},
         content = {
-            LoginContent(navController)
+            LoginContent()
         },
         bottomBar = {
             LoginBottombar(navController)
         }
     )
+
+    //Manejar eatdo de peticion de login
+    Login(navController = navController)
 }
 
 

@@ -1,44 +1,36 @@
 package com.orion.gamermvvmapp.presentation.screens.login.components
 
-import android.util.Log
-import android.widget.Toast
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.orion.gamermvvmapp.R
-import com.orion.gamermvvmapp.domain.model.Response
 import com.orion.gamermvvmapp.presentation.components.DefaultButton
 import com.orion.gamermvvmapp.presentation.components.DefaultTextField
-import com.orion.gamermvvmapp.presentation.navigation.AppScreen
 import com.orion.gamermvvmapp.presentation.screens.login.LoginViewModel
 import com.orion.gamermvvmapp.presentation.ui.theme.Blue700
 import com.orion.gamermvvmapp.presentation.ui.theme.Dark700
 
 @Composable
-fun LoginContent(navController: NavHostController,viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginContent(viewModel: LoginViewModel = hiltViewModel()) {
 
-    val loginFlow = viewModel.loginFlow.collectAsState()
+
+    val state = viewModel.state
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -98,24 +90,24 @@ fun LoginContent(navController: NavHostController,viewModel: LoginViewModel = hi
 
                 DefaultTextField(
                     modifier = Modifier.padding(top = 25.dp),
-                    value = viewModel.email.value,
-                    onValueChange ={ viewModel.email.value = it},
+                    value = state.email,
+                    onValueChange ={ viewModel.onEmailInput(it)},
                     label ="Correo Electrico",
                     icon = Icons.Default.Email,
                     keyboardType = KeyboardType.Email,
-                    errorMsg = viewModel.emailErrorMsg.value,
+                    errorMsg = viewModel.emailErrorMsg,
                     validateFiel = { viewModel.validateEmail()
                     }
                 )
 
                 DefaultTextField(
                     modifier = Modifier.padding(top = 5.dp),
-                    value = viewModel.password.value,
-                    onValueChange = {viewModel.password.value = it},
+                    value = state.password,
+                    onValueChange = {viewModel.onPasswordInput(it)},
                     label = "Contraseña" ,
                     icon = Icons.Default.Lock,
                     hideText = true,
-                    errorMsg = viewModel.passwordErrorMsg.value,
+                    errorMsg = viewModel.passwordErrorMsg,
                     validateFiel = {
                         viewModel.validatepassword()
                     }
@@ -140,34 +132,7 @@ fun LoginContent(navController: NavHostController,viewModel: LoginViewModel = hi
 
         }
     }
-    loginFlow.value.let {
-        when(it) {
-            // Mostrar que se esta realizando la peticion
-            Response.Loading -> {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ){
-                    CircularProgressIndicator()
-                }
-            }
-            is Response.Success -> {
-                LaunchedEffect(Unit) {
-                    navController.navigate(route = AppScreen.Profile.route) {
-                        popUpTo(AppScreen.Login.route) {
-                            inclusive = true
-                        }
-                    }
-                }
-                Toast.makeText(LocalContext.current,"Usuario Logeado", Toast.LENGTH_LONG).show()
-            }
 
-            is Response.Failure -> {
-                Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
-            }
-            else ->{}
-        }
-    }
 }
 
 

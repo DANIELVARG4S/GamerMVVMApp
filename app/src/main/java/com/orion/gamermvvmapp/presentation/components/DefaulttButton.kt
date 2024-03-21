@@ -12,9 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.orion.gamermvvmapp.presentation.ui.theme.Blue500
-import com.orion.gamermvvmapp.presentation.ui.theme.Blue700
+
 
 @Composable
 fun DefaultButton(

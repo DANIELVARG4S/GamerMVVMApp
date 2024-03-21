@@ -10,6 +10,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.orion.gamermvvmapp.presentation.components.DefaultTopBar
+
+import com.orion.gamermvvmapp.presentation.screens.signup.components.SignUp
 import com.orion.gamermvvmapp.presentation.screens.signup.components.SignupContent
 import com.orion.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 
@@ -21,7 +23,7 @@ fun SignupScreen(navController: NavHostController) {
         topBar = {
                  DefaultTopBar(
                      title = "Nuevo Usuario",
-                     upAvaliable = true,
+                     //upAvaliable = true,
                      navController = navController
                  )
         },
@@ -30,6 +32,7 @@ fun SignupScreen(navController: NavHostController) {
         },
         bottomBar = {}
     )
+    SignUp(navController = navController)
 }
 
 @Preview(showBackground = true, showSystemUi = true)

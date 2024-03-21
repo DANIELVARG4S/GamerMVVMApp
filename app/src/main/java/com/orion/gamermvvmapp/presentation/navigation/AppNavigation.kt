@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.orion.gamermvvmapp.presentation.screens.login.Loginscreen
 import com.orion.gamermvvmapp.presentation.screens.profile.ProfileScreen
+import com.orion.gamermvvmapp.presentation.screens.profile_edit.ProfileEditScreen
 import com.orion.gamermvvmapp.presentation.screens.signup.SignupScreen
 
 
@@ -26,6 +27,10 @@ fun AppNavigation(navController: NavHostController ) {
 
         composable(route = AppScreen.Profile.route){
             ProfileScreen(navController)
+        }
+
+        composable(route = AppScreen.ProfileEdit.route) {
+            ProfileEditScreen(navController)
         }
     }
 }

@@ -17,7 +17,7 @@ import com.orion.gamermvvmapp.presentation.ui.theme.Blue700
 @Composable
 fun DefaultTopBar(
     title:String,
-    upAvaliable:Boolean = false,
+    //upAvaliable:Boolean = false,
     navController: NavHostController? = null
 
 ) {
