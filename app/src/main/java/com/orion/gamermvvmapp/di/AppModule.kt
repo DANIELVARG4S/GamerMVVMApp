@@ -5,6 +5,8 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.orion.gamermvvmapp.core.Constans.USERS
 import com.orion.gamermvvmapp.data.repository.AuthRepositoryImpl
 import com.orion.gamermvvmapp.data.repository.UsersRepositoryImpl
@@ -30,6 +32,12 @@ object AppModule {
 
     @Provides
     fun provideFirebasefirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Provides
+    fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
+
+    @Provides
+    fun provideStorageUsersRef(storage: FirebaseStorage) : StorageReference = storage.reference.child(USERS)
 
     @Provides
     fun provideUsersRef(db: FirebaseFirestore): CollectionReference = db.collection(USERS)

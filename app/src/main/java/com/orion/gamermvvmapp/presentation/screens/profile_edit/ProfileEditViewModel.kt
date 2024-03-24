@@ -1,5 +1,6 @@
 package com.orion.gamermvvmapp.presentation.screens.profile_edit
 
+import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContract
@@ -13,14 +14,18 @@ import androidx.lifecycle.viewModelScope
 import com.orion.gamermvvmapp.domain.model.Response
 import com.orion.gamermvvmapp.domain.model.User
 import com.orion.gamermvvmapp.domain.use_cases.users.UsersUseCases
+import com.orion.gamermvvmapp.presentation.utils.ComposeFileProvider
+import com.orion.gamermvvmapp.presentation.utils.ResultingActivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileEditViewModel  @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val usersUseCases: UsersUseCases
+    private val usersUseCases: UsersUseCases,
+    @ApplicationContext private  val contex:Context
 ): ViewModel(){
 
     //STAte Form
@@ -39,20 +44,30 @@ class ProfileEditViewModel  @Inject constructor(
         private set
 
 
-    var imageUri by mutableStateOf<Uri?>(null)
+    var imageUri by mutableStateOf("")
 
-    var hasImage by mutableStateOf(false)
+    val resultingActivityHandler = ResultingActivityHandler()
 
-    fun  onCameraResult(result: Boolean) {
 
-        hasImage = result
-    }
-    fun onGaleyResult(uri: Uri?) {
-        hasImage = uri != null
-        imageUri = uri
-    }
     init {
         state = state.copy(username = user.username)
+    }
+
+    fun pickImage() = viewModelScope.launch {
+        val result = resultingActivityHandler.getContent("image/*")
+
+        if ( result != null) {
+            imageUri = result.toString()
+        }
+    }
+
+
+    fun takePhoto() = viewModelScope.launch {
+        val result = resultingActivityHandler.takePicturePreview()
+
+        if (result != null) {
+            imageUri = ComposeFileProvider.getPathFromBitmap(contex, result)
+        }
     }
 
     fun  validateUsernam() {
