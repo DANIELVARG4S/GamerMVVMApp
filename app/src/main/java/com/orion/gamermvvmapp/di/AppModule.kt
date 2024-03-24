@@ -17,6 +17,7 @@ import com.orion.gamermvvmapp.domain.use_cases.auth.Logout
 import com.orion.gamermvvmapp.domain.use_cases.auth.Signup
 import com.orion.gamermvvmapp.domain.use_cases.users.Create
 import com.orion.gamermvvmapp.domain.use_cases.users.GetUserById
+import com.orion.gamermvvmapp.domain.use_cases.users.Update
 import com.orion.gamermvvmapp.domain.use_cases.users.UsersUseCases
 import dagger.Module
 import dagger.Provides
@@ -53,6 +54,7 @@ object AppModule {
     fun provideUserUsesCases(repository: UsersRepository) = UsersUseCases (
         create = Create(repository),
         getUserById = GetUserById(repository ),
+        update = Update(repository)
     )
 
 

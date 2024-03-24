@@ -8,6 +8,7 @@ interface UsersRepository {
 
     suspend fun create(user: User): Response<Boolean>
 
+    suspend fun update(user: User ): Response<Boolean>
     // flow cambios en tiempo real
     fun getUserById(id:String): kotlinx.coroutines.flow.Flow<User>
 }
