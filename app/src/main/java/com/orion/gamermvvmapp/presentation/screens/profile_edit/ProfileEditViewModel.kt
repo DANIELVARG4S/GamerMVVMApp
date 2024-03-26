@@ -19,13 +19,14 @@ import com.orion.gamermvvmapp.presentation.utils.ResultingActivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileEditViewModel  @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val usersUseCases: UsersUseCases,
-    @ApplicationContext private  val contex:Context
+    @ApplicationContext private  val context:Context
 ): ViewModel(){
 
     //STAte Form
@@ -43,8 +44,13 @@ class ProfileEditViewModel  @Inject constructor(
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
+    var  saveImageResponse by mutableStateOf<Response<String>?>(null)
+        private set
+
 
     var imageUri by mutableStateOf("")
+
+    var file: File? = null
 
     val resultingActivityHandler = ResultingActivityHandler()
 
@@ -53,11 +59,19 @@ class ProfileEditViewModel  @Inject constructor(
         state = state.copy(username = user.username)
     }
 
+    fun saveImage() = viewModelScope.launch {
+        if (file != null) {
+            saveImageResponse = Response.Loading
+            val result = usersUseCases.saveImage(file!!)
+            saveImageResponse = result
+        }
+    }
     fun pickImage() = viewModelScope.launch {
         val result = resultingActivityHandler.getContent("image/*")
 
         if ( result != null) {
             imageUri = result.toString()
+            file = ComposeFileProvider.createFileFromUri(context , result)
         }
     }
 
@@ -66,7 +80,8 @@ class ProfileEditViewModel  @Inject constructor(
         val result = resultingActivityHandler.takePicturePreview()
 
         if (result != null) {
-            imageUri = ComposeFileProvider.getPathFromBitmap(contex, result)
+            imageUri = ComposeFileProvider.getPathFromBitmap(context, result)
+            file = File(imageUri)
         }
     }
 
@@ -85,11 +100,11 @@ class ProfileEditViewModel  @Inject constructor(
         updateResponse = result
     }
 
-    fun onUpdate(){
+    fun onUpdate(url: String){
         val myUser = User(
             id = user.id,
             username = state.username,
-            image = ""
+            image = url
         )
         update(myUser)
     }

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.orion.gamermvvmapp.presentation.components.DefaultTopBar
 import com.orion.gamermvvmapp.presentation.screens.profile_edit.components.ProfileEditContent
+import com.orion.gamermvvmapp.presentation.screens.profile_edit.components.SaveImage
 import com.orion.gamermvvmapp.presentation.screens.profile_edit.components.Update
 
 
@@ -28,5 +29,6 @@ fun ProfileEditScreen(
         },
         bottomBar = {}
     )
+    SaveImage()
     Update()
 }

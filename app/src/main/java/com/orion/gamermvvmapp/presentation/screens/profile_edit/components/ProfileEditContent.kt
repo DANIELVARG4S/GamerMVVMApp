@@ -154,7 +154,7 @@ fun ProfileEditContent(navController: NavHostController, viewModel: ProfileEditV
                         .fillMaxWidth()
                         .padding(top = 20.dp, bottom = 40.dp),
                     text = "ACTUALIZAR DATOS",
-                    onClick = { viewModel.onUpdate() },
+                    onClick = { viewModel.saveImage() },
 
                 )
 
