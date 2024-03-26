@@ -26,7 +26,7 @@ class ComposeFileProvider: FileProvider(R.xml.file_paths) {
                     context.cacheDir
                 )
                 FileUtils.copyInputStreamToFile(stream, file)
-                return  null
+                return  file
             }catch (e:Exception){
                 e.printStackTrace()
                 return null

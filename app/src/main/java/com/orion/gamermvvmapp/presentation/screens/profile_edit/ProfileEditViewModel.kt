@@ -94,11 +94,6 @@ class ProfileEditViewModel  @Inject constructor(
         }
     }
 
-    fun update(user: User) = viewModelScope.launch {
-        updateResponse = Response.Loading
-        val result = usersUseCases.update(user)
-        updateResponse = result
-    }
 
     fun onUpdate(url: String){
         val myUser = User(
@@ -108,7 +103,11 @@ class ProfileEditViewModel  @Inject constructor(
         )
         update(myUser)
     }
-
+    fun update(user: User) = viewModelScope.launch {
+        updateResponse = Response.Loading
+        val result = usersUseCases.update(user)
+        updateResponse = result
+    }
     fun onUserNameInput(username: String) {
         state = state.copy(username = username)
     }
