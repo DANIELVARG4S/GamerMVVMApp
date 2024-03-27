@@ -48,7 +48,7 @@ class ProfileEditViewModel  @Inject constructor(
         private set
 
 
-    var imageUri by mutableStateOf("")
+
 
     var file: File? = null
 
@@ -56,7 +56,10 @@ class ProfileEditViewModel  @Inject constructor(
 
 
     init {
-        state = state.copy(username = user.username)
+        state = state.copy(
+            username = user.username,
+            image = user.image
+        )
     }
 
     fun saveImage() = viewModelScope.launch {
@@ -70,8 +73,9 @@ class ProfileEditViewModel  @Inject constructor(
         val result = resultingActivityHandler.getContent("image/*")
 
         if ( result != null) {
-            imageUri = result.toString()
+
             file = ComposeFileProvider.createFileFromUri(context , result)
+            state = state.copy(image = result.toString())
         }
     }
 
@@ -80,17 +84,16 @@ class ProfileEditViewModel  @Inject constructor(
         val result = resultingActivityHandler.takePicturePreview()
 
         if (result != null) {
-            imageUri = ComposeFileProvider.getPathFromBitmap(context, result)
-            file = File(imageUri)
+            state = state.copy( image = ComposeFileProvider.getPathFromBitmap(context, result))
+            file = File(state.image)
         }
     }
 
     fun  validateUsernam() {
-        if (state.username.length >= 5) {
-            usarnameErrorMsg = ""
-        }
-        else {
-            usarnameErrorMsg = "Al menos 5 caracteres"
+        usarnameErrorMsg = if (state.username.length >= 5) {
+            ""
+        } else {
+            "Al menos 5 caracteres"
         }
     }
 

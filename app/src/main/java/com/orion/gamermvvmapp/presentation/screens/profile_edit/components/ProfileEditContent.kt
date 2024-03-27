@@ -79,7 +79,7 @@ fun ProfileEditContent(navController: NavHostController, viewModel: ProfileEditV
             ) {
                 Spacer(modifier = Modifier.height(0.dp))
 
-                if (viewModel.imageUri != "") {
+                if (viewModel.state.image != "") {
                     AsyncImage(
                         modifier = Modifier
                             .height(100.dp)
@@ -87,7 +87,7 @@ fun ProfileEditContent(navController: NavHostController, viewModel: ProfileEditV
                             .clickable {
                                        dialogState.value = true
                             },
-                        model = viewModel.imageUri,
+                        model = viewModel.state.image,
                         contentDescription = "Selected image",
                         contentScale = ContentScale.Crop
                     )
